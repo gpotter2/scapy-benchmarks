@@ -3,14 +3,12 @@
 ### Dissection (IP+UDP+DNS) time
 
 ![Dissection](./build/dissects.png)
-
-<sup><sub>*Values are displayed RELATIVELY to the most recent mesure (the one on the right will always be 1.0)*</sub></sup>
+*Values are displayed RELATIVELY to the most recent mesure (the one on the right will always be 1.0)*
 
 ### Build (IP+UDP+DNS) time
 
 ![Build](./build/builds.png)
-
-<sup><sub>*Values are displayed RELATIVELY to the most recent mesure (the one on the right will always be 1.0)*</sub></sup>
+*Values are displayed RELATIVELY to the most recent mesure (the one on the right will always be 1.0)*
 
 ### Number of packet definitions
 
