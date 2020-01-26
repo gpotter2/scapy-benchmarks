@@ -10,6 +10,10 @@ All values are displayed RELATIVELY to the most recent mesure (the one on the ri
 
 ![Build](./build/builds.png)
 
+### Numver of layers loaded by default
+
+![Number of layers](./build/layers.png)
+
 ### Infos
 
 Host machine:
@@ -18,4 +22,4 @@ Host machine:
 [GCC 7.4.0]
 ```
 
-Current master: [`dcfb63d`](https://github.com/secdev/scapy/commit/dcfb63d06860b9bb3eef3875dc1c915c7dfc7cad)
+Current master: [`1e842e1`](https://github.com/secdev/scapy/commit/1e842e1d860439a63668f4608032459c80cb2fe2)

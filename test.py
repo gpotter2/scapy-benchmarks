@@ -34,11 +34,15 @@ def test_build(N=5000):
     delta = time.time() - a
     return delta / N * 1000
 
+def nb_layers():
+    return len(conf.layers)
+
 # RUN TESTS
 
 N = 5000
 
 a = test_build(N)
 b = test_dissect(N)
+c = nb_layers()
 
-print("%s:%s" % (a, b))
+print("%s:%s:%s" % (a, b, c))

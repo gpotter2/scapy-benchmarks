@@ -10,6 +10,10 @@ All values are displayed RELATIVELY to the most recent mesure (the one on the ri
 
 ![Build](./build/builds.png)
 
+### Numver of layers loaded by default
+
+![Number of layers](./build/layers.png)
+
 ### Infos
 
 Host machine:

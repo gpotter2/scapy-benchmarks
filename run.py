@@ -52,6 +52,7 @@ TAGS += ["master"]
 
 BUILDS = []
 DISSECTS = []
+NB_LAYERS = []
 
 for tag in TAGS:
     print("Testing %s..." % tag)
@@ -65,9 +66,10 @@ for tag in TAGS:
         [sys.executable, "test.py"],
         stdout=subprocess.PIPE
     ).communicate()[0].decode()
-    a, b = map(float, res.split(":"))
+    a, b, c = map(float, res.split(":"))
     BUILDS.append(a)
     DISSECTS.append(b)
+    NB_LAYERS.append(c)
 
 # Re-scale
 
@@ -92,6 +94,11 @@ plt.bar(TAGS, DISSECTS)
 plt.savefig("build/dissects.png")
 plt.clf()
 os.chmod("build/dissects.png", 0o777)
+
+plt.bar(TAGS, NB_LAYERS)
+plt.savefig("build/layers.png")
+plt.clf()
+os.chmod("build/layers.png", 0o777)
 
 # Rebuild README
 
