@@ -4,15 +4,15 @@
 
 ![Dissection](./build/dissects.png)
 
-### Build (IP+UDP+DNS) time
+<sup><sub>*Values are displayed RELATIVELY to the most recent mesure (the one on the right will always be 1.0)*</sub></sup>
 
-*Values are displayed RELATIVELY to the most recent mesure (the one on the right will always be 1.0)*
+### Build (IP+UDP+DNS) time
 
 ![Build](./build/builds.png)
 
-### Number of packet definitions
+<sup><sub>*Values are displayed RELATIVELY to the most recent mesure (the one on the right will always be 1.0)*</sub></sup>
 
-*Values are displayed RELATIVELY to the most recent mesure (the one on the right will always be 1.0)*
+### Number of packet definitions
 
 ![Number of layers](./build/layers.png)
 
@@ -28,4 +28,4 @@ Host machine:
 [GCC 7.4.0]
 ```
 
-Current master: [`6c331b7`](https://github.com/secdev/scapy/commit/6c331b78aaeef7af53035760698b1d7d6afeb9a7)
+Current master: [`3047580`](https://github.com/secdev/scapy/commit/3047580162a9407ef05fe981983cacfa698f1159)
