@@ -53,23 +53,35 @@ TAGS += ["master"]
 BUILDS = []
 DISSECTS = []
 NB_LAYERS = []
+NB_LAYERS_CONTRIB = []
+NB_LAY_OK = []
+NB_LAY_BRK = []
 
 for tag in TAGS:
     print("Testing %s..." % tag)
     with open(os.devnull, "w") as dv:
         subprocess.Popen(
-            ["git", "checkout", "--quiet", tag],
+            ["git", "reset", "--hard", "--quiet", tag],
             cwd=pth,
             stdout=dv,
         ).communicate()
+    if tag == "v2.2.0":
+        extra = ["ikev2.py"]
+    else:
+        extra = []
     res = subprocess.Popen(
-        [sys.executable, "test.py"],
+        [sys.executable, "test.py"] + extra,
         stdout=subprocess.PIPE
-    ).communicate()[0].decode()
-    a, b, c = map(float, res.split(":"))
+    ).communicate()[0].decode().strip().split("\n")[-1]
+    parts = res.split(":")
+    a, b = float(parts[0]), float(parts[1])
+    c = map(int, parts[2].split(","))
     BUILDS.append(a)
     DISSECTS.append(b)
-    NB_LAYERS.append(c)
+    NB_LAYERS.append(c[0])
+    NB_LAYERS_CONTRIB.append(c[1])
+    NB_LAY_OK.append(c[2])
+    NB_LAY_BRK.append(c[3])
 
 # Re-scale
 
@@ -95,10 +107,19 @@ plt.savefig("build/dissects.png")
 plt.clf()
 os.chmod("build/dissects.png", 0o777)
 
-plt.bar(TAGS, NB_LAYERS)
+plt.bar(TAGS, NB_LAYERS, label="layers (default)")
+plt.bar(TAGS, NB_LAYERS_CONTRIB, label="contribs")
+plt.legend()
 plt.savefig("build/layers.png")
 plt.clf()
 os.chmod("build/layers.png", 0o777)
+
+plt.bar(TAGS, NB_LAY_OK, label="contribs")
+plt.bar(TAGS, NB_LAY_BRK, label="broken contribs")
+plt.legend()
+plt.savefig("build/layers_mod.png")
+plt.clf()
+os.chmod("build/layers_mod.png", 0o777)
 
 # Rebuild README
 

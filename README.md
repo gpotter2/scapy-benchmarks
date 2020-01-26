@@ -10,9 +10,13 @@ All values are displayed RELATIVELY to the most recent mesure (the one on the ri
 
 ![Build](./build/builds.png)
 
-### Numver of layers loaded by default
+### Number of packet definitions
 
 ![Number of layers](./build/layers.png)
+
+### Numver of contrib layers files
+
+![Number of layers](./build/layers_mod.png)
 
 ### Infos
 
@@ -22,4 +26,4 @@ Host machine:
 [GCC 7.4.0]
 ```
 
-Current master: [`1e842e1`](https://github.com/secdev/scapy/commit/1e842e1d860439a63668f4608032459c80cb2fe2)
+Current master: [`3047580`](https://github.com/secdev/scapy/commit/3047580162a9407ef05fe981983cacfa698f1159)

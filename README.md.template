@@ -10,9 +10,13 @@ All values are displayed RELATIVELY to the most recent mesure (the one on the ri
 
 ![Build](./build/builds.png)
 
-### Numver of layers loaded by default
+### Number of packet definitions
 
 ![Number of layers](./build/layers.png)
+
+### Numver of contrib layers files
+
+![Number of layers](./build/layers_mod.png)
 
 ### Infos
 

@@ -1,5 +1,5 @@
 #!/bin/bash
-sudo python2 run.py && git add -A
+python2 run.py && git add -A
 git status
 read -p "Publish? [n]: " publish
 if [ "$publish" == "y" ] || [ "$publish" == "yes" ]

@@ -13,6 +13,9 @@ logging.getLogger("scapy").setLevel(logging.ERROR)
 
 from scapy.all import *
 
+import imp
+import os
+
 # DEFINE TESTS
 
 import time
@@ -35,7 +38,31 @@ def test_build(N=5000):
     return delta / N * 1000
 
 def nb_layers():
-    return len(conf.layers)
+    lay_default = len(conf.layers)
+    # Load contribs
+    nb_contrib_ok = 0
+    nb_contrib_broken = 0
+    for fname in os.listdir("scapy/scapy/contrib"):
+        # We dont want to include automaton or scada
+        # (too many "fake" layers)
+        if fname.endswith('.py'):
+            try:
+                if fname in sys.argv:
+                    raise Exception
+                imp.load_source("null", os.path.abspath(
+                    os.path.join(
+                        "scapy/scapy/contrib/",
+                        fname
+                    )
+                ))
+                nb_contrib_ok += 1
+            except Exception:
+                nb_contrib_broken += 1
+    lay_contrib = len(conf.layers) - lay_default
+    return ",".join(str(x) for x in [
+               lay_default, lay_contrib,
+               nb_contrib_ok, nb_contrib_broken
+           ])
 
 # RUN TESTS
 
