@@ -26,4 +26,4 @@ Host machine:
 [GCC 7.4.0]
 ```
 
-Current master: [`3047580`](https://github.com/secdev/scapy/commit/3047580162a9407ef05fe981983cacfa698f1159)
+Current master: [`6ec82f8`](https://github.com/secdev/scapy/commit/6ec82f8883817b2d93b3dd640e2db9bf169ebc7d)

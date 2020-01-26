@@ -22,11 +22,16 @@ pth = os.path.abspath("./scapy")
 print("Fetching remote...")
 
 with open(os.devnull, "w") as dv:
-    subprocess.Popen(
+    for cmd in [
         ["git", "fetch", "--prune-tags"],
-        cwd=pth,
-        stdout=dv,
-    ).communicate()
+        ["git", "reset", "--hard", "master"],
+        ["git", "pull", "origin", "master"],
+    ]:
+        subprocess.Popen(
+            cmd,
+            cwd=pth,
+            stdout=dv,
+        ).communicate()
 
 master = subprocess.Popen(
     ["git", "rev-parse", "HEAD"],
@@ -107,7 +112,7 @@ plt.savefig("build/dissects.png")
 plt.clf()
 os.chmod("build/dissects.png", 0o777)
 
-plt.bar(TAGS, NB_LAYERS, label="layers (default)")
+plt.bar(TAGS, NB_LAYERS, label="layers")
 plt.bar(TAGS, NB_LAYERS_CONTRIB, label="contribs")
 plt.legend()
 plt.savefig("build/layers.png")
