@@ -14,7 +14,7 @@ logging.getLogger("scapy").setLevel(logging.ERROR)
 
 from scapy.all import *
 
-import imp
+import importlib
 import os
 
 # DEFINE TESTS
@@ -52,12 +52,15 @@ def nb_layers():
                 try:
                     if fname in sys.argv:
                         raise Exception
-                    imp.load_source("null", os.path.abspath(
-                        os.path.join(
-                            "scapy/scapy/%s/" % ty,
-                            fname
-                        )
-                    ))
+                    importlib.import_module(
+                        "scapy.%s.%s" % (ty, fname)
+                    )
+                    #imp.load_source("null", os.path.abspath(
+                    #    os.path.join(
+                    #        "scapy/scapy/%s/" % ty,
+                    #        fname
+                    #    )
+                    #))
                     nb_ok += 1
                 except Exception:
                     nb_broken += 1
