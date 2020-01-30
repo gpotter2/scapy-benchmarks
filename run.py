@@ -58,6 +58,7 @@ TAGS += ["master"]
 BUILDS = []
 DISSECTS = []
 NB_LAYERS = []
+NB_LAYERS_NONDEFAULT = []
 NB_LAYERS_CONTRIB = []
 NB_LAY_OK = []
 NB_LAY_BRK = []
@@ -84,9 +85,10 @@ for tag in TAGS:
     BUILDS.append(a)
     DISSECTS.append(b)
     NB_LAYERS.append(c[0])
-    NB_LAYERS_CONTRIB.append(c[1])
-    NB_LAY_OK.append(c[2])
-    NB_LAY_BRK.append(c[3])
+    NB_LAYERS_NONDEFAULT.append(c[1])
+    NB_LAYERS_CONTRIB.append(c[2])
+    NB_LAY_OK.append(c[3])
+    NB_LAY_BRK.append(c[4])
 
 # Re-scale
 
@@ -114,13 +116,14 @@ os.chmod("build/dissects.png", 0o777)
 
 plt.bar(TAGS, NB_LAYERS_CONTRIB, label="contribs")
 plt.bar(TAGS, NB_LAYERS, label="layers")
+plt.bar(TAGS, NB_LAYERS_NONDEFAULT, label="non default layers")
 plt.legend()
 plt.savefig("build/layers.png")
 plt.clf()
 os.chmod("build/layers.png", 0o777)
 
-plt.bar(TAGS, NB_LAY_OK, label="contribs")
-plt.bar(TAGS, NB_LAY_BRK, label="broken contribs")
+plt.bar(TAGS, NB_LAY_OK, label="layers/contribs")
+plt.bar(TAGS, NB_LAY_BRK, label="broken layers/contribs")
 plt.legend()
 plt.savefig("build/layers_mod.png")
 plt.clf()
