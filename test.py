@@ -53,14 +53,8 @@ def nb_layers():
                     if fname in sys.argv:
                         raise Exception
                     importlib.import_module(
-                        "scapy.%s.%s" % (ty, fname)
+                        "scapy.%s.%s" % (ty, fname[:-3])
                     )
-                    #imp.load_source("null", os.path.abspath(
-                    #    os.path.join(
-                    #        "scapy/scapy/%s/" % ty,
-                    #        fname
-                    #    )
-                    #))
                     nb_ok += 1
                 except Exception:
                     nb_broken += 1
