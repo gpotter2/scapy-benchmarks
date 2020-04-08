@@ -1,4 +1,5 @@
 #!/bin/bash
+git submodule update --init --recursive --remote
 python2 run.py && git add -A
 git status
 read -p "Publish? [n]: " publish
