@@ -70,7 +70,7 @@ def nb_layers():
 
 # RUN TESTS
 
-N = 5000
+N = 20000
 
 a = test_build(N)
 b = test_dissect(N)

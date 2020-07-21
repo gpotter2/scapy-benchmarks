@@ -12,7 +12,7 @@ setuptools.setup(
     long_description_content_type="text/markdown",
     url="https://github.com/gpotter2/scapy-benchmarks",
     install_requires=[
-        'matplotlib;python_version>"3"',
+        'matplotlib>3.1;python_version>"3"',
         'matplotlib<3.1;python_version<"2.7"',
         'argparse;python_version<"2.7"'
     ],
@@ -22,5 +22,6 @@ setuptools.setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
+    zip_safe=True,
     python_requires='>=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, <4',
 )

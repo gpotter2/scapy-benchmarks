@@ -135,6 +135,9 @@ DISSECTS = [x / DISSECTS[-1] for x in DISSECTS]
 VARIATIONS_BUILDS = ["{:+.2%}".format(x - 1) for x in BUILDS]
 VARIATIONS_DISSECTS = ["{:+.2%}".format(x - 1) for x in DISSECTS]
 
+VARIATIONS_BUILDS[-1] = ""
+VARIATIONS_DISSECTS[-1] = ""
+
 # Graph
 
 print("Exporting... ", end="")
