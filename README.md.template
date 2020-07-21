@@ -5,6 +5,7 @@
 ![Dissection](./build/dissects.png)
 
 Lower is better
+
 *Values are displayed RELATIVELY to the most recent mesure (the one on the right will always be 1.0)*
 
 ### Build (IP+UDP+DNS) time
@@ -12,11 +13,14 @@ Lower is better
 ![Build](./build/builds.png)
 
 Lower is better
+
 *Values are displayed RELATIVELY to the most recent mesure (the one on the right will always be 1.0)*
 
 ### Number of packet definitions
 
 ![Number of layers](./build/layers.png)
+
+Note: Scada and automative layers are not included (too many "fake" layers)
 
 ### Number of contrib layers files
 
