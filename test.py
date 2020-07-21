@@ -34,7 +34,7 @@ import time
 def test_build(N=5000):
     a = time.time()
     for i in range(N):
-        IP(version=4, ihl=5, tos=0, len=40, id=1, flags=0, frag=0, ttl=64, proto=17, chksum=31938, src='127.0.0.1', dst='127.0.0.1')/UDP(sport=53, dport=53, len=20, chksum=90)/DNS()
+        bytes(IP(version=4, ihl=5, tos=0, len=40, id=1, flags=0, frag=0, ttl=64, proto=17, chksum=31938, src='127.0.0.1', dst='127.0.0.1')/UDP(sport=53, dport=53, len=20, chksum=90)/DNS())
     delta = time.time() - a
     return delta / N * 1000
 
