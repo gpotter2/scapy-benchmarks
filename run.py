@@ -164,9 +164,7 @@ VARIATIONS_BUILDS_PY3 = ["{:+.2%}".format(x - 1) for x in BUILDS_PY3]
 VARIATIONS_DISSECTS_PY2 = ["{:+.2%}".format(x - 1) for x in DISSECTS_PY2]
 VARIATIONS_DISSECTS_PY3 = ["{:+.2%}".format(x - 1) for x in DISSECTS_PY3]
 
-VARIATIONS_BUILDS_PY2[-1] = ""
 VARIATIONS_BUILDS_PY3[-1] = ""
-VARIATIONS_DISSECTS_PY2[-1] = ""
 VARIATIONS_DISSECTS_PY3[-1] = ""
 
 # Create index for tags
