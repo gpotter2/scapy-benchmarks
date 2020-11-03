@@ -73,7 +73,7 @@ def nb_layers():
 
 # RUN TESTS
 
-N = 5000
+N = 20000
 
 import warnings
 with warnings.catch_warnings():
