@@ -2,6 +2,7 @@
 python3 setup.py install > /dev/null
 python2 setup.py install > /dev/null
 git submodule update --init --recursive --remote
+cd scapy && git pull origin master && cd ..
 python3 run.py && git add -A
 if [ "$?" == "1" ]
 then
