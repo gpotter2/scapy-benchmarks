@@ -7,6 +7,7 @@ from __future__ import print_function
 import argparse
 import os
 import platform
+import re
 import subprocess
 import sys
 
@@ -34,13 +35,14 @@ with open(os.devnull, "w") as dv:
         ["git", "reset", "--hard", "master", "--quiet"],
         ["git", "pull", "origin", "master", "--quiet"],
     ]:
-        err = subprocess.Popen(
+        P = subprocess.Popen(
             cmd,
             cwd=pth,
             stdout=dv,
             stderr=subprocess.PIPE,
-        ).communicate()[1]
-        if err:
+        )
+        P.communicate()
+        if P.returncode != 0:
             print("ERROR")
             print(err)
             sys.exit(1)
@@ -58,8 +60,8 @@ print("OK")
 if args.references:
     TAGS = args.references
 else:
-    if sys.version_info >= (3, 0, 0):
-        raise OSError("Requires Python 2 to test Scapy < 2.4.0 !")
+    if sys.version_info < (3, 0, 0):
+        raise OSError("Requires Python 3 to perform dual tests")
 
     TAGS = subprocess.Popen(
         ["git", "tag", "--list"],
@@ -70,13 +72,18 @@ else:
     TAGS = [
         x for x in TAGS if "rc" not in x and x[1] == "2"
     ]
-    TAGS = TAGS[TAGS.index("v2.2.0"):]
+    TAGS = TAGS[TAGS.index("v2.4.3"):]
     TAGS += ["master"]
 
 # Perform tests
 
-BUILDS = []
-DISSECTS = []
+TAGS_PY2 = []
+TAGS_PY3 = []
+BUILDS_PY2 = []
+BUILDS_PY3 = []
+DISSECTS_PY2 = []
+DISSECTS_PY3 = []
+
 NB_LAYERS = []
 NB_LAYERS_NONDEFAULT = []
 NB_LAYERS_CONTRIB = []
@@ -99,44 +106,74 @@ for tag in TAGS:
         print(err.decode())
     else:
         print("OK")
+    # PYTHON 3 DETECTION
+    if re.match("v\d\.\d\.\d", tag):
+        VER = tuple(int(x) for x in tag[1:].split("."))
+        if VER >= (2, 4):
+            PYVER = ["python2", "python3"]
+        else:
+            PYVER = ["python2"]
+    else:
+        PYVER = ["python3"]
     # TESTING
-    print("  running test... ", end="")
-    if tag == "v2.2.0":
-        extra = ["ikev2.py"]
-    else:
-        extra = []
-    res = subprocess.Popen(
-        [sys.executable, "test.py"] + extra,
-        stdout=subprocess.PIPE
-    ).communicate()[0].decode().strip().split("\n")[-1]
-    try:
-        parts = res.split(":")
-        a, b = float(parts[0]), float(parts[1])
-        c = list(map(int, parts[2].split(",")))
-        BUILDS.append(a)
-        DISSECTS.append(b)
-        NB_LAYERS.append(c[0])
-        NB_LAYERS_NONDEFAULT.append(c[1])
-        NB_LAYERS_CONTRIB.append(c[2])
-        NB_LAY_OK.append(c[3])
-        NB_LAY_BRK.append(c[4])
-    except Exception:
-        print("ERROR")
-    else:
-        print("OK")
+    print("  running test... ")
+    for VER in PYVER:
+        print("    " + VER + "...", end="")
+        if tag == "v2.2.0":
+            extra = ["ikev2.py"]
+        else:
+            extra = []
+        res = subprocess.Popen(
+            [VER, "test.py"] + extra,
+            stdout=subprocess.PIPE
+        ).communicate()[0].decode().strip().split("\n")[-1]
+        try:
+            parts = res.split(":")
+            a, b = float(parts[0]), float(parts[1])
+            c = list(map(int, parts[2].split(",")))
+            if VER == "python2":
+                TAGS_PY2.append(tag)
+                BUILDS_PY2.append(a)
+                DISSECTS_PY2.append(b)
+            elif VER == "python3":
+                TAGS_PY3.append(tag)
+                BUILDS_PY3.append(a)
+                DISSECTS_PY3.append(b)
+        except Exception:
+            print("ERROR")
+        else:
+            print("OK")
+    NB_LAYERS.append(c[0])
+    NB_LAYERS_NONDEFAULT.append(c[1])
+    NB_LAYERS_CONTRIB.append(c[2])
+    NB_LAY_OK.append(c[3])
+    NB_LAY_BRK.append(c[4])
 
 # Re-scale
 
-BUILDS = [x / BUILDS[-1] for x in BUILDS]
-DISSECTS = [x / DISSECTS[-1] for x in DISSECTS]
+BUILDS_PY2 = [x / BUILDS_PY3[-1] for x in BUILDS_PY2]
+BUILDS_PY3 = [x / BUILDS_PY3[-1] for x in BUILDS_PY3]
+DISSECTS_PY2 = [x / DISSECTS_PY3[-1] for x in DISSECTS_PY2]
+DISSECTS_PY3 = [x / DISSECTS_PY3[-1] for x in DISSECTS_PY3]
 
 # Variation
 
-VARIATIONS_BUILDS = ["{:+.2%}".format(x - 1) for x in BUILDS]
-VARIATIONS_DISSECTS = ["{:+.2%}".format(x - 1) for x in DISSECTS]
+VARIATIONS_BUILDS_PY2 = ["{:+.2%}".format(x - 1) for x in BUILDS_PY2]
+VARIATIONS_BUILDS_PY3 = ["{:+.2%}".format(x - 1) for x in BUILDS_PY3]
+VARIATIONS_DISSECTS_PY2 = ["{:+.2%}".format(x - 1) for x in DISSECTS_PY2]
+VARIATIONS_DISSECTS_PY3 = ["{:+.2%}".format(x - 1) for x in DISSECTS_PY3]
 
-VARIATIONS_BUILDS[-1] = ""
-VARIATIONS_DISSECTS[-1] = ""
+VARIATIONS_BUILDS_PY2[-1] = ""
+VARIATIONS_BUILDS_PY3[-1] = ""
+VARIATIONS_DISSECTS_PY2[-1] = ""
+VARIATIONS_DISSECTS_PY3[-1] = ""
+
+# Create index for tags
+
+IND = list(range(len(TAGS)))
+WIDTH = 0.35
+IND_PY2 = [x for i, x in enumerate(IND) if TAGS[i] in TAGS_PY2]
+IND_PY3 = [x + WIDTH for i, x in enumerate(IND) if TAGS[i] in TAGS_PY3]
 
 # Graph
 
@@ -156,14 +193,22 @@ try:
 except Exception:
     pass
 
-bar = plt.bar(TAGS, BUILDS)
-label_bar(bar, VARIATIONS_BUILDS)
+bar = plt.bar(IND_PY2, BUILDS_PY2, WIDTH, label='PY2')
+label_bar(bar, VARIATIONS_BUILDS_PY2)
+bar = plt.bar(IND_PY3, BUILDS_PY3, WIDTH, label='PY3')
+label_bar(bar, VARIATIONS_BUILDS_PY3)
+plt.xticks([x + WIDTH/2 for x in IND], TAGS)
+plt.legend()
 plt.savefig("build/builds.png")
 plt.clf()
 os.chmod("build/builds.png", 0o777)
 
-bar = plt.bar(TAGS, DISSECTS)
-label_bar(bar, VARIATIONS_DISSECTS)
+bar = plt.bar(IND_PY2, DISSECTS_PY2, WIDTH, label='PY2')
+label_bar(bar, VARIATIONS_DISSECTS_PY2)
+bar = plt.bar(IND_PY3, DISSECTS_PY3, WIDTH, label='PY3')
+label_bar(bar, VARIATIONS_DISSECTS_PY3)
+plt.xticks([x + WIDTH/2 for x in IND], TAGS)
+plt.legend()
 plt.savefig("build/dissects.png")
 plt.clf()
 os.chmod("build/dissects.png", 0o777)

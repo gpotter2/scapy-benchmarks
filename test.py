@@ -12,7 +12,10 @@ import logging
 logging.getLogger("scapy.runtime").setLevel(logging.ERROR)
 logging.getLogger("scapy").setLevel(logging.ERROR)
 
-from scapy.all import *
+import warnings
+with warnings.catch_warnings():
+    warnings.simplefilter("ignore")
+    from scapy.all import *
 
 import importlib
 import os
@@ -70,7 +73,7 @@ def nb_layers():
 
 # RUN TESTS
 
-N = 20000
+N = 100
 
 a = test_build(N)
 b = test_dissect(N)
