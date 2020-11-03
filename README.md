@@ -34,4 +34,4 @@ Host machine:
 [GCC 9.3.0]
 ```
 
-Current master: [`b'd6f0fd8'`](https://github.com/secdev/scapy/commit/b'd6f0fd8283f1bef90d570912caad5a8f8b476841')
+Current master: [`d6f0fd8`](https://github.com/secdev/scapy/commit/d6f0fd8283f1bef90d570912caad5a8f8b476841)

@@ -51,7 +51,7 @@ master = subprocess.Popen(
     ["git", "rev-parse", "HEAD"],
     cwd=pth,
     stdout=subprocess.PIPE,
-).communicate()[0].strip()
+).communicate()[0].strip().decode()
 
 print("OK")
 
