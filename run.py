@@ -72,7 +72,7 @@ else:
     TAGS = [
         x for x in TAGS if "rc" not in x and x[1] == "2"
     ]
-    TAGS = TAGS[TAGS.index("v2.4.3"):]
+    TAGS = TAGS[TAGS.index("v2.2.0"):]
     TAGS += ["master"]
 
 # Perform tests
@@ -109,12 +109,13 @@ for tag in TAGS:
     # PYTHON 3 DETECTION
     if re.match("v\d\.\d\.\d", tag):
         VER = tuple(int(x) for x in tag[1:].split("."))
-        if VER >= (2, 4):
+        if VER >= (2, 4, 1):
+            # Before 2.4.1, things are broken
             PYVER = ["python2", "python3"]
         else:
             PYVER = ["python2"]
     else:
-        PYVER = ["python3"]
+        PYVER = ["python2", "python3"]
     # TESTING
     print("  running test... ")
     for VER in PYVER:

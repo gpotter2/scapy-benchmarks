@@ -73,10 +73,13 @@ def nb_layers():
 
 # RUN TESTS
 
-N = 100
+N = 5000
 
-a = test_build(N)
-b = test_dissect(N)
-c = nb_layers()
+import warnings
+with warnings.catch_warnings():
+    warnings.simplefilter("ignore")
+    a = test_build(N)
+    b = test_dissect(N)
+    c = nb_layers()
 
 print("%s:%s:%s" % (a, b, c))

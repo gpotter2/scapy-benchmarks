@@ -1,7 +1,8 @@
 #!/bin/bash
-python2 setup.py install
+python3 setup.py install > /dev/null
+python2 setup.py install > /dev/null
 git submodule update --init --recursive --remote
-python2 run.py && git add -A
+python3 run.py && git add -A
 if [ "$?" == "1" ]
 then
   exit 1
