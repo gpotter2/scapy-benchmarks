@@ -30,8 +30,8 @@ Note: Scada and automative layers are not included (too many "fake" layers)
 
 Host machine:
 ```
-3.9.0 (default, Oct  7 2020, 14:37:49) 
+3.9.0 (default, Nov 12 2020, 22:22:02) 
 [GCC 9.3.0]
 ```
 
-Current master: [`d6f0fd8`](https://github.com/secdev/scapy/commit/d6f0fd8283f1bef90d570912caad5a8f8b476841)
+Current master: [`210993d`](https://github.com/secdev/scapy/commit/210993d264b8779af6dee67f836352b961995924)
